@@ -1,0 +1,25 @@
+{
+  "name": "com.fisipgroup.appupdate",
+  "version": "1.0.0",
+  "displayName": "FisipGroup AppUpdate",
+  "description": "This custom package contains several scripts to help on the update of FisipGroup apps.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "",
+  "changelogUrl": "https://github.com/JoaoSantosFisip/fisipgroup-custom-package-appupdate/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/JoaoSantosFisip/fisipgroup-custom-package-appupdate/blob/main/LICENSE.md",
+  "keywords": [
+    "appupdate",
+    "fisipgroup"
+  ],
+  "author": {
+    "name": "FisipGroup",
+    "email": "joao@fisipgroup.com",
+    "url": "https://github.com/JoaoSantosFisip"
+  },
+  "dependencies": {
+    "com.fisipgroup.tools": "1.0.9",
+    "com.unity.visualscripting": "1.9.1",
+    "com.unity.textmeshpro": "3.0.6"
+  }
+}
