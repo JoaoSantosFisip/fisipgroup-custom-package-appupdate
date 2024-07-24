@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using Google.Play.AppUpdate;
 using Unity.VisualScripting;
+using FisipGroup.CustomPackage.AppUpdate.Helpers;
 
 namespace FisipGroup.CustomPackage.AppUpdate
 {
