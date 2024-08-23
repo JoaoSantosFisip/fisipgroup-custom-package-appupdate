@@ -3,6 +3,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using Unity.Services.RemoteConfig;
+using UnityEditor;
 
 namespace FisipGroup.CustomPackage.AppUpdate
 {
@@ -12,10 +14,16 @@ namespace FisipGroup.CustomPackage.AppUpdate
 
         private static IAppUpdaterPlatform Updater;
 
+        public static bool MajorUpdateAvailable = false;
         public static bool HasUpdates = false;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void Initialize()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void AddListeners()
+        {
+            RemoteConfigService.Instance.FetchCompleted += Initialize;
+        }
+
+        private static void Initialize(ConfigResponse response)
         {
             Updater
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
@@ -29,6 +37,30 @@ namespace FisipGroup.CustomPackage.AppUpdate
             CoroutineRunner.instance.StartCoroutine(Updater.CheckForUpdates((success, hasUpdates) => 
             {
                 HasUpdates = hasUpdates;
+
+                // Check if a major update is available
+                if (HasUpdates)
+                {
+                    if(int.TryParse(PlayerSettings.bundleVersion, out var currentVersion))
+                    {
+                        var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("Versions");
+                        var updateVersions = JsonUtility.FromJson<AppVersion[]>(updatesJSON);
+
+                        foreach (var version in updateVersions)
+                        {
+                            if(currentVersion < int.Parse(version.version) && version.major)
+                            {
+                                MajorUpdateAvailable = true;
+                                
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("AppUpdater.cs: Invalid version number: " + PlayerSettings.bundleVersion);
+                    }
+                }
 
                 OnUpdatesCheck?.Invoke(success);
             }));
