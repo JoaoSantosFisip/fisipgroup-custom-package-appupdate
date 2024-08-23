@@ -1,5 +1,8 @@
 All notable changes to this project will be documented in this file.
 
+[1.0.5] - 2024-08-23
+ - Fixed json bug with Array type.
+
 [1.0.4] - 2024-08-23
  - Changed remote config dependency version.
  - Fixed on build bug with PlayerSettings.

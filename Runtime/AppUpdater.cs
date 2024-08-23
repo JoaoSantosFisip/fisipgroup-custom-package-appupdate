@@ -44,9 +44,9 @@ namespace FisipGroup.CustomPackage.AppUpdate
                     if(int.TryParse(Application.version, out var currentVersion))
                     {
                         var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("Versions");
-                        var updateVersions = JsonUtility.FromJson<AppVersion[]>(updatesJSON);
+                        var wrapper = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON);
 
-                        foreach (var version in updateVersions)
+                        foreach (var version in wrapper.versions)
                         {
                             if(currentVersion < int.Parse(version.version) && version.major)
                             {
