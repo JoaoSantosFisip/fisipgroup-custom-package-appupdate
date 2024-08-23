@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.Services.RemoteConfig;
-using UnityEditor;
 
 namespace FisipGroup.CustomPackage.AppUpdate
 {
@@ -48,7 +47,7 @@ namespace FisipGroup.CustomPackage.AppUpdate
 
                         foreach (var version in wrapper.versions)
                         {
-                            if(currentVersion < int.Parse(version.version) && version.major)
+                            if(currentVersion < int.Parse(version.number))
                             {
                                 MajorUpdateAvailable = true;
                                 
