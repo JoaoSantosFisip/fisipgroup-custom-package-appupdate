@@ -1,6 +1,6 @@
 {
   "name": "com.fisipgroup.appupdate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "displayName": "FisipGroup AppUpdate",
   "description": "This custom package contains several scripts to help on the update of FisipGroup apps.\n\nRequires com.google.play.appupdate package from https://developers.google.com/unity/packages#google_play",
   "unity": "2019.1",
@@ -21,6 +21,6 @@
     "com.fisipgroup.tools": "1.0.9",
     "com.unity.visualscripting": "1.9.1",
     "com.unity.textmeshpro": "3.0.6",
-    "com.unity.remote-config": "3.0.6"
+    "com.unity.remote-config": "4.1.1"
   }
 }

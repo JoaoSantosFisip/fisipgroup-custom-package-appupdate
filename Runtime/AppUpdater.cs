@@ -41,7 +41,7 @@ namespace FisipGroup.CustomPackage.AppUpdate
                 // Check if a major update is available
                 if (HasUpdates)
                 {
-                    if(int.TryParse(PlayerSettings.bundleVersion, out var currentVersion))
+                    if(int.TryParse(Application.version, out var currentVersion))
                     {
                         var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("Versions");
                         var updateVersions = JsonUtility.FromJson<AppVersion[]>(updatesJSON);
@@ -58,7 +58,7 @@ namespace FisipGroup.CustomPackage.AppUpdate
                     }
                     else
                     {
-                        Debug.LogError("AppUpdater.cs: Invalid version number: " + PlayerSettings.bundleVersion);
+                        Debug.LogError("AppUpdater.cs: Invalid version number: " + Application.version);
                     }
                 }
 
