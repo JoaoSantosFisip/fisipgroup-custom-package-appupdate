@@ -40,22 +40,19 @@ namespace FisipGroup.CustomPackage.AppUpdate
                 // Check if a major update is available
                 if (HasUpdates)
                 {
-                    if(int.TryParse(Application.version, out var currentVersion))
+                    if (int.TryParse(Application.version, out var currentVersions))
                     {
-                        Debug.LogError("Update Available, Checking for major updates");
+                        var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("MajorVersions");
+                        var majorUpdates = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON).versions;
 
-                        var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("Versions");
-
-                        Debug.LogError(updatesJSON);
-
-                        var wrapper = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON);
-
-                        foreach (var version in wrapper.versions)
+                        foreach (var version in majorUpdates)
                         {
-                            if(currentVersion < int.Parse(version.number))
+                            if (currentVersions < int.Parse(version))
                             {
                                 MajorUpdateAvailable = true;
-                                
+
+                                Debug.LogWarning("AppUpdater.cs: Major update available");
+
                                 break;
                             }
                         }
