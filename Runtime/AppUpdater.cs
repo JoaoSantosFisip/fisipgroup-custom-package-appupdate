@@ -42,7 +42,12 @@ namespace FisipGroup.CustomPackage.AppUpdate
                 {
                     if(int.TryParse(Application.version, out var currentVersion))
                     {
+                        Debug.LogError("Update Available, Checking for major updates");
+
                         var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("Versions");
+
+                        Debug.LogError(updatesJSON);
+
                         var wrapper = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON);
 
                         foreach (var version in wrapper.versions)
