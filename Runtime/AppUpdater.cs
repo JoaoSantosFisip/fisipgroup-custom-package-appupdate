@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using Unity.Services.RemoteConfig;
 using System.Linq.Expressions;
 using System;
+using FisipGroup.CustomPackage.Tools.Helpers;
 
 namespace FisipGroup.CustomPackage.AppUpdate
 {
@@ -42,6 +43,18 @@ namespace FisipGroup.CustomPackage.AppUpdate
                 // Check if a major update is available
                 if (HasUpdates)
                 {
+#if UNITY_EDITOR
+                    var info = HelperCustomPackage.GetInfoFile<AppUpdaterInfoScriptableObject>("AppUpdate") as AppUpdaterInfoScriptableObject;
+                    if (info.setMajorUpdateAvailable)
+                    {
+                        MajorUpdateAvailable = true;
+
+                        OnUpdatesCheck?.Invoke(true);
+
+                        return;
+                    }
+#endif
+
                     try
                     {
                         if (int.TryParse(Application.version, out var currentVersions))

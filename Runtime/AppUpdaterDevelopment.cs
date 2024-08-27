@@ -1,5 +1,6 @@
 // Ignore Spelling: Fisip App
 
+using FisipGroup.CustomPackage.Tools.Helpers;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace FisipGroup.CustomPackage.AppUpdate
 
             Debug.Log("AppUpdaterDevelopment.cs: Skipping updates since it's a development build or editor");
 
-            callback.Invoke(true, true);
+            callback.Invoke(true, (HelperCustomPackage.GetInfoFile<AppUpdaterInfoScriptableObject>("AppUpdate") as AppUpdaterInfoScriptableObject).setUpdateAvailable);
         }
 
         public void UpdateBehaviour()

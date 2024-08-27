@@ -1,5 +1,8 @@
 All notable changes to this project will be documented in this file.
 
+[1.0.10] - 2024-08-27
+ - Added debug test tools.
+
 [1.0.9] - 2024-08-27
  - Added try catch to JSON data retrieval.
 
