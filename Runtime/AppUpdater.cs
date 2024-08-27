@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.Services.RemoteConfig;
+using System.Linq.Expressions;
+using System;
 
 namespace FisipGroup.CustomPackage.AppUpdate
 {
@@ -40,26 +42,33 @@ namespace FisipGroup.CustomPackage.AppUpdate
                 // Check if a major update is available
                 if (HasUpdates)
                 {
-                    if (int.TryParse(Application.version, out var currentVersions))
+                    try
                     {
-                        var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("MajorVersions");
-                        var majorUpdates = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON).versions;
-
-                        foreach (var version in majorUpdates)
+                        if (int.TryParse(Application.version, out var currentVersions))
                         {
-                            if (currentVersions < int.Parse(version))
+                            var updatesJSON = RemoteConfigService.Instance.appConfig.GetJson("MajorVersions");
+                            var majorUpdates = JsonUtility.FromJson<AppVersionWrapper>(updatesJSON).versions;
+
+                            foreach (var version in majorUpdates)
                             {
-                                MajorUpdateAvailable = true;
+                                if (currentVersions < int.Parse(version))
+                                {
+                                    MajorUpdateAvailable = true;
 
-                                Debug.LogWarning("AppUpdater.cs: Major update available");
+                                    Debug.LogWarning("AppUpdater.cs: Major update available");
 
-                                break;
+                                    break;
+                                }
                             }
                         }
+                        else
+                        {
+                            Debug.LogError("AppUpdater.cs: Invalid version number: " + Application.version);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Debug.LogError("AppUpdater.cs: Invalid version number: " + Application.version);
+                        Debug.LogError("AppUpdater.cs: Error getting JSON data: " + ex.Message);
                     }
                 }
 
